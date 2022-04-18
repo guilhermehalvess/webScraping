@@ -9,7 +9,7 @@ URL base: https://unica.shopper.com.br/shop/#bemvindo
 
 Salvar os dados no banco de dados Postgres (com exportação para csv). 
 
-Fast API para consultar os dados do Postgres (com busca por ID).
+FastAPI para consultar os dados do Postgres (com busca por ID).
 
 #### 2. Tecnologias Utilizadas
 
@@ -47,13 +47,22 @@ import datetime
 
 import re 
 
-#### 3. Projeto
+#### 3 Arquivos no diretório
 
-###### 3.1 webscraping.py
+* Backup Postgres - backup do banco (DBwebscraping.sql) com todos os produtos. Para acessar clique [aqui](https://github.com/guilhermehalvess/webScraping/tree/master/Backup%20Postgres)
+* Exportação assortment - arquivo csv com os produtos. Para acessar clique [aqui] (https://github.com/guilhermehalvess/webScraping/tree/master/Exporta%C3%A7%C3%A3o%20assortment)
+* FastAPI - Imagens dos GET's a partir da página local 127.0.0.1:5000/docs
+* chromeDriver - Driver para o selenium controlar o Chrome
+* main.py - código Python para o FastAPI (e sua conexão com o banco)
+* webscraping.py - código para o selenium + BeautifulSoup realizar a busca no site, e conexão com o postgres.
+
+#### 4. Projeto
+
+###### 4.1 webscraping.py
 
 Nesse arquivo temos o BeautifulSoup + selenium para realizar a busca no site e o psycopg2 para a conexão no banco para realizar o insert. 
 
-###### 3.1.1 Postgres
+###### 4.1.1 Postgres
 
 * Dados para conexão do banco no dicionário em uma classe para configuração
 ~~~ python
@@ -86,7 +95,7 @@ class ProdutoBanco(Connection):
         sleep(0.1)
 ~~~ 
 
-###### 3.1.2 Selenium
+###### 4.1.2 Selenium
 
 * Com o selenium foi utilizado o webdriver.Chrome(), para que ele possa utilizar o Chrome de forma automatizada (no repositório tem o chromedriver.exe, ao testar o código se for em um Windows precisa deixar na mesma pasta). 
 * O primeiro desafio é passar pela página de login, então foi necessário localizar elementos na página para chegar até o login para preencher com o e-mail, senha e realizar o login. 
@@ -127,7 +136,7 @@ sleep(1.5)
 button_fechar_endereco = navegador.find_elements_by_css_selector('svg > path[d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z"]')[0]
 button_fechar_endereco.click()
 ~~~
-* Agora logado tenho acesso a nossa URL base, então com uma lista dos setores passo em todos coletando os produtos. 
+* Agora logado tenho acesso a nossa URL base. Então, com uma lista dos setores passo em todos coletando os produtos. 
 * Como a página é dinâmica, não mostram todos os produtos de uma vez, é necessário ir rolando até chegar no final da página.
 ~~~ python
 # Descer o scroll para pegar todos os itens
@@ -143,7 +152,7 @@ while True:
         break
     ultimo_tamanho = novo_tamanho
 ~~~ 
-* Ao descer temos todos os produtos no HTML da página, já podemos buscar a div que tem todos os produtos e passar para o BeautifulSoup realizar a coleta dos dados.
+* Ao descer, temos todos os produtos no HTML da página, já podemos buscar a div que tem todos os produtos e passar para o BeautifulSoup realizar a coleta dos dados.
 
 ~~~ python
 # elemento que contem os produtos
@@ -153,7 +162,7 @@ elemento = navegador.find_element_by_xpath("//div[@style='position: relative;']/
 html_content=elemento.get_attribute('outerHTML')
 ~~~
 
-###### 3.1.2 BeautifulSoup
+###### 4.1.3 BeautifulSoup
 
 * A cada setor o selenium irá rolar e passar o HTML completo. Temos que realizar o parser do HTML e coletar de cada produto o valor, link da imagem e descrição. Criando as variáveis de data e hora e realizando os ajustes necessários nas variáves para salvar no Postgres.
 
@@ -194,9 +203,9 @@ html_content=elemento.get_attribute('outerHTML')
 produtoBD.insertall(descricao.text,valor_decimal,'Alimentos',setor_tratado,'Shopper',imagem['src'],'S',data,hora)
 ~~~ 
 
-###### 3.2 main.py
+###### 4.2 main.py
 
-Nesse arquivo temos o Fast API e sua conexão com o banco para buscar os dados.
+Nesse arquivo temos o FastAPI e sua conexão com o banco para buscar os dados.
 
 * Temos a estrutura do banco de dados com o sqlalchemy
 ~~~ python
@@ -220,7 +229,7 @@ produtos = sqlalchemy.Table(
 )
 ~~~
 
-* Temos a lista de elementos que irá mostrar no Fast API ao buscar os dados
+* Temos a lista de elementos que irá mostrar no FastAPI ao buscar os dados
 ~~~ python
 class produtoListar(BaseModel):
     in_codigo      : int
@@ -239,7 +248,7 @@ class produtoListar(BaseModel):
     dh_hour        : time
 ~~~
 
-* Fast API tem duas buscas, um GET que retorna todos os produtos, e um GET onde pode informar o ID do produto.
+* FastAPI tem duas buscas, um GET que retorna todos os produtos, e um GET onde pode informar o ID do produto.
 ~~~ python
 @app.get("/produto", response_model=List[produtoListar])
 async def buscar_produtos():
@@ -253,8 +262,9 @@ async def busca_produto_id(produtoId: int):
 ~~~ 
 
 * Imagem da execução do GET com retorno de todos os produtos.
-![Fast API GET todos os produtos](https://github.com/guilhermehalvess/webScraping/blob/master/FastAPI/FastAPI_Todos_Produtos.PNG)
+![FastAPI GET todos os produtos](https://github.com/guilhermehalvess/webScraping/blob/master/FastAPI/FastAPI_Todos_Produtos.PNG)
 
 * Imagem da execução do GET com retorno de acordo com o ID.
-![Fast API GET filtrando por ID](https://github.com/guilhermehalvess/webScraping/blob/master/FastAPI/FastAPI_Busca_Por_ID.PNG)
+![FastAPI GET filtrando por ID](https://github.com/guilhermehalvess/webScraping/blob/master/FastAPI/FastAPI_Busca_Por_ID.PNG)
+
 
