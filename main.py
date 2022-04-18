@@ -2,10 +2,8 @@ from fastapi import FastAPI
 import databases, sqlalchemy
 from datetime import date, time, datetime
 import uvicorn
-#import modeloBase as mdBase
 from pydantic import BaseModel, Field
 from typing import List
-
 
 app = FastAPI()
 
@@ -56,14 +54,14 @@ class produtoListar(BaseModel):
     dt_created_at  : date
     dh_hour        : time
 
-class ProdutoAdicionar(BaseModel):
-    st_name        : str  = Field(..., example="MISTURA PARA BOLO STEVITA DE BAUNILHA 300G")
-    in_price_to    : str  = Field(..., example="11.48")
-    st_department  : str  = Field(..., example="Alimentos")
-    st_category    : str  = Field(..., example="cafe da manha")
-    st_store       : str  = Field(..., example="Shopper")
-    st_image       : str  = Field(..., example="https://d2om08pcbtz1n1.cloudfront.net/misturabaunilhastevita5877.jpg")
-    st_available   : str  = Field(..., example="S")
+# class ProdutoAdicionar(BaseModel):
+#     st_name        : str  = Field(..., example="MISTURA PARA BOLO STEVITA DE BAUNILHA 300G")
+#     in_price_to    : str  = Field(..., example="11.48")
+#     st_department  : str  = Field(..., example="Alimentos")
+#     st_category    : str  = Field(..., example="cafe da manha")
+#     st_store       : str  = Field(..., example="Shopper")
+#     st_image       : str  = Field(..., example="https://d2om08pcbtz1n1.cloudfront.net/misturabaunilhastevita5877.jpg")
+#     st_available   : str  = Field(..., example="S")
 
 @app.on_event("startup")
 async def startup():
