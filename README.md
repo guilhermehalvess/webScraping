@@ -55,7 +55,7 @@ import re
 #### 3 Arquivos no diretório
 
 * Backup Postgres - backup do banco (DBwebscraping.sql) com todos os produtos. Para acessar clique [aqui](https://github.com/guilhermehalvess/webScraping/tree/master/Backup%20Postgres)
-* Exportação assortment - arquivo csv com os produtos. Para acessar clique [aqui] (https://github.com/guilhermehalvess/webScraping/tree/master/Exporta%C3%A7%C3%A3o%20assortment)
+* Exportação assortment - arquivo csv com os produtos. Para acessar clique [aqui](https://github.com/guilhermehalvess/webScraping/tree/master/Exporta%C3%A7%C3%A3o%20assortment)
 * FastAPI - Imagens dos GET's a partir da página local 127.0.0.1:5000/docs
 * chromeDriver - Driver para o selenium controlar o Chrome
 * main.py - código Python para o FastAPI (e sua conexão com o banco)
