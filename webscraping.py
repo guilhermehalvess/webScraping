@@ -65,15 +65,12 @@ class ProdutoBanco(Connection):
         Connection.__init__(self)
 
     def insertall(self, *args):
-        # try:
         sql = "INSERT INTO produtos (st_name,in_price_to,st_department,st_category,st_store,st_image,st_available,dt_created_at,dh_hour) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         print('sql =',sql)
         print('args=',args)
         self.execute(sql, args)
         self.commit()
         sleep(0.1)
-        # except Exception as e:
-        #     print('Erro ao inserir', e)
 
 # Inicia o banco
 produtoBD = ProdutoBanco()
