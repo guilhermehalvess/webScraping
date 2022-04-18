@@ -13,7 +13,7 @@ FastAPI para consultar os dados do Postgres (com busca por ID).
 
 ###### Disclaimer
 
-* Não há alguns dados na Shopper, como SKU, link do produto, promoção e quantidade em estoque.
+* Não tem (ou não localizei) alguns dados na Shopper, como SKU, link do produto, promoção e quantidade em estoque.
 * Não há coleta de dados em nenhum concorrente para cruzar os dados para realizar a comparação e criar a seller.csv.
 
 #### 2. Tecnologias Utilizadas
