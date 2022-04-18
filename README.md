@@ -51,11 +51,11 @@ import re
 
 ###### 3.1 webscraping.py
 
-Nesse arquivo temos o BeautifulSoup + selenium para realizar a busca no site e o psycopg2 para realizar a conexão no banco para realizar o insert. 
+Nesse arquivo temos o BeautifulSoup + selenium para realizar a busca no site e o psycopg2 para a conexão no banco para realizar o insert. 
 
 ###### 3.1.1 Postgres
 
-* Dados para conexão banco no dicionário em uma classe para configuração
+* Dados para conexão do banco no dicionário em uma classe para configuração
 ~~~ python
 class Config:
     def __init__(self):
@@ -86,10 +86,10 @@ class ProdutoBanco(Connection):
         sleep(0.1)
 ~~~ 
 
-###### 3.1.1 Selenium
+###### 3.1.2 Selenium
 
 * Com o selenium foi utilizado o webdriver.Chrome(), para que ele possa utilizar o Chrome de forma automatizada (no repositório tem o chromedriver.exe, ao testar o código se for em um Windows precisa deixar na mesma pasta). 
-* O primeiro desafio é passar pela página de login, então foi necessário localizar elementos na página para abrir a página de login, preencher com e-mail e senha e realizar o login. 
+* O primeiro desafio é passar pela página de login, então foi necessário localizar elementos na página para chegar até o login para preencher com o e-mail, senha e realizar o login. 
 ~~~ python
 navegador = webdriver.Chrome()
 navegador.get('https://landing.shopper.com.br/')
