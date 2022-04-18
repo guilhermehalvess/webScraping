@@ -11,6 +11,11 @@ Salvar os dados no banco de dados Postgres (com exportação para csv).
 
 FastAPI para consultar os dados do Postgres (com busca por ID).
 
+###### Disclaimer
+
+* Não há alguns dados na Shopper, como SKU, link do produto, promoção e quantidade em estoque.
+* Não há coleta de dados em nenhum concorrente para cruzar os dados para realizar a comparação e criar a seller.csv.
+
 #### 2. Tecnologias Utilizadas
 
 * Python 3.10.4
